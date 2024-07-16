@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+class DeepCopyExample {
+private:
+    int* data;
+
+public:
+    // Constructor
+    DeepCopyExample(int value) {
+        data = new int(value);
+    }
+
+    // Deep copy constructor
+    DeepCopyExample(const DeepCopyExample& other) {
+        data = new int(*(other.data)); // Copy the data
+    }
+
+    // Public member function to set the data
+    void setData(int value) {
+        *data = value;
+    }
+
+    // Display the data
+    void displayData() {
+        cout << "Data: " << *data <<"\n";
+    }
+
+    // Destructor to release allocated memory
+    ~DeepCopyExample() {
+        delete data;
+    }
+};
+
+int main() {
+    DeepCopyExample original(42);
+    DeepCopyExample copy(original); // Deep copy
+
+    original.displayData();
+    copy.displayData();
+
+    // Use the public member function to modify the data
+    original.setData(10);
+
+    original.displayData(); // Now displays "Data: 10"
+    copy.displayData();    // Still displays "Data: 42"
+
+    return 0;
+}
+

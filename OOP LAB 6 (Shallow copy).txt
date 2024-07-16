@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+class ShallowCopyExample {
+private:
+    int* data;
+
+public:
+    // Constructor
+    ShallowCopyExample(int value) {
+        data = new int(value);
+    }
+
+    // Shallow copy constructor
+    ShallowCopyExample(const ShallowCopyExample& other) {
+        data = other.data; // Copy the address, not the data
+    }
+
+    // Public member function to set the data
+    void setData(int value) {
+        *data = value;
+    }
+
+    // Display the data
+    void displayData() {
+        cout << "Data: " << *data << "\n";
+    }
+
+    // Destructor to release allocated memory
+    ~ShallowCopyExample() {
+        delete data;
+    }
+};
+
+int main() {
+    ShallowCopyExample original(42);
+    ShallowCopyExample copy(original); // Shallow copy
+
+    original.displayData();
+    copy.displayData();
+
+    // Use the public member function to modify the data
+    original.setData(10);
+
+    original.displayData(); // Now displays "Data: 10"
+    copy.displayData();    // Still displays "Data: 10"
+
+    return 0;
+}
